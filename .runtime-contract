@@ -1,4 +1,5 @@
-﻿# IntentForge AI Runtime Contract
+# IntentForge AI Runtime Contract
+# Source of truth for the current project runtime baseline.
 
 PYTHON_VERSION=3.12
 NODE_MAJOR_VERSION=22

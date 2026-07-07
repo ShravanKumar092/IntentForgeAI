@@ -1,4 +1,4 @@
-﻿# ADR-002: Runtime and Technology Stack
+# ADR-002: Runtime and Technology Stack
 
 ## Status
 

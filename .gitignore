@@ -1,4 +1,4 @@
-﻿# ============================================
+# ============================================
 # IntentForge AI — Git Ignore Rules
 # ============================================
 
@@ -90,4 +90,4 @@ workspaces/
 sandboxes/
 artifacts/
 
-.ruff_cache/
+# Line endings are normalized by .gitattributes.

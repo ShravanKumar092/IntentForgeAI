@@ -1,17 +1,33 @@
-﻿# Changelog
+# Changelog
 
-All significant changes to IntentForge AI will be documented in this file.
+All significant changes to IntentForge AI are documented in this file.
 
 ## [Unreleased]
 
 ### Added
 
-- Initial repository foundation.
-- Project governance structure.
-- Initial Project Constitution.
-- Environment contract.
-- Repository ignore rules.
-- Research and engineering directory structure.
+- Day 1 closure document `docs/traceability/closures/IF-D1-day-1-closure.md`.
+- Day 1 closure evidence record `IF-P1-E003`.
+- Day 1 closure registry entry in `research/traceability/registry.json`.
+- Repository documentation aligned with the verified backend state.
+- Explicit line-ending policy through `.gitattributes`.
+- Apache 2.0 licensing for the repository.
+
+### Verification
+
+- Confirmed the official Python 3.12.10 virtual environment.
+- Confirmed package import and application import.
+- Verified Ruff static analysis passes.
+- Verified the 16-test backend regression suite passes.
+- Verified the remote repository is synchronized with local `main`.
+
+## [0.1.0] — 2026-07-07
+
+### Added
+
+- IntentForge AI repository initialized.
+- Official remote repository connected.
+- Phase 1 backend foundation established and verified.
 
 ### Runtime Foundation
 
@@ -39,21 +55,6 @@ All significant changes to IntentForge AI will be documented in this file.
 
 ### Architecture
 
-- Accepted ADR-003: Configuration, Runtime Identity, and Observability Foundation.
-
-## [0.0.1] — 2026-07-07
-
-### Added
-
-- IntentForge AI repository initialized.
-- Official remote repository connected.
-- Phase 0 execution started.
-
-### Architecture
-
+- Accepted ADR-001: Modular Monorepo Architecture.
 - Accepted ADR-002: Runtime and Technology Stack.
-- Locked Python 3.12 as the official backend runtime.
-- Locked Node.js 22 LTS as the frontend runtime family.
-- Selected FastAPI, React, TypeScript, PostgreSQL, Redis, and Docker.
-- Rejected premature microservices and a dedicated graph database for the initial implementation.
-- Added the machine-readable runtime contract.
+- Accepted ADR-003: Configuration, Runtime Identity, and Observability Foundation.

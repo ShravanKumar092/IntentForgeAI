@@ -1,4 +1,4 @@
-﻿# ADR-001: Use a Modular Monorepo Architecture
+# ADR-001: Use a Modular Monorepo Architecture
 
 ## Status
 

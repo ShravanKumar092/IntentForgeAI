@@ -1,10 +1,10 @@
-﻿# IntentForge AI — Project Constitution
+# IntentForge AI — Project Constitution
 
 ## Constitution Version
 
-Version: 0.1.0  
-Status: Draft  
-Phase: Phase 0 — Research Lock and System Specification
+Version: 0.2.0
+Status: Active
+Phase: Phase 1 — Backend Foundation and Runtime Verification
 
 ---
 
@@ -186,6 +186,8 @@ must update this Constitution through a new version.
 
 ## 12. Current State
 
-The project is in Phase 0.
+The project is in Phase 1.
 
-No application code should be treated as official implementation until the initial research scope, architecture decisions, and evaluation contract are frozen.
+The verified backend foundation and runtime observability baseline are official implementation work.
+
+No later-phase work should be treated as complete until it is independently verified and recorded with traceable evidence.

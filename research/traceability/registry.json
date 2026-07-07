@@ -55,5 +55,20 @@
       ],
       "commit": "99be223"
     }
+  ],
+  "closures": [
+    {
+      "id": "IF-D1",
+      "title": "Day 1 Closure",
+      "status": "CLOSED",
+      "phase": "Phase 1",
+      "related_milestones": [
+        "IF-M1",
+        "IF-M2"
+      ],
+      "evidence": [
+        "IF-P1-E003"
+      ]
+    }
   ]
 }
