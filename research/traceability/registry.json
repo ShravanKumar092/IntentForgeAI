@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1.0",
+  "project": "IntentForge AI",
+  "milestones": [
+    {
+      "id": "IF-M1",
+      "title": "Verified Backend Foundation",
+      "status": "VERIFIED",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002"
+      ],
+      "implementation": [
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/src/intentforge_api/api/routes/health.py"
+      ],
+      "tests": [
+        "apps/api/tests/test_health.py"
+      ],
+      "evidence": [
+        "IF-P1-E001"
+      ],
+      "commit": "d2b8d9e"
+    }
+  ]
+}
