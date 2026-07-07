@@ -1,0 +1,91 @@
+﻿# ============================================
+# IntentForge AI — Git Ignore Rules
+# ============================================
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+dist/
+build/
+.vite/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating systems
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+tmp/
+temp/
+.cache/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# AI / ML artifacts
+models/
+checkpoints/
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+
+# Research outputs
+research/experiments/results/raw/
+research/experiments/runs/
+
+# Docker
+docker-data/
+
+# Test artifacts
+coverage/
+test-results/
+playwright-report/
+
+# IntentForge generated workspaces
+workspaces/
+sandboxes/
+artifacts/
