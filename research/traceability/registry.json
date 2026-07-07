@@ -22,6 +22,38 @@
         "IF-P1-E001"
       ],
       "commit": "d2b8d9e"
+    },
+    {
+      "id": "IF-M2",
+      "title": "Runtime Identity and Observability Foundation",
+      "status": "VERIFIED",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003"
+      ],
+      "implementation": [
+        ".env.example",
+        "apps/api/src/intentforge_api/core/config.py",
+        "apps/api/src/intentforge_api/core/runtime.py",
+        "apps/api/src/intentforge_api/core/correlation.py",
+        "apps/api/src/intentforge_api/core/logging.py",
+        "apps/api/src/intentforge_api/middleware/request_logging.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/src/intentforge_api/api/routes/health.py"
+      ],
+      "tests": [
+        "apps/api/tests/test_config.py",
+        "apps/api/tests/test_runtime.py",
+        "apps/api/tests/test_correlation.py",
+        "apps/api/tests/test_logging.py",
+        "apps/api/tests/test_health.py"
+      ],
+      "evidence": [
+        "IF-P1-E002"
+      ],
+      "commit": "PENDING"
     }
   ]
 }
