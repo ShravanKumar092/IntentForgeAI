@@ -6,6 +6,11 @@ All significant changes to IntentForge AI are documented in this file.
 
 ### Added
 
+- M3 PostgreSQL persistence foundation with async SQLAlchemy, Alembic, and readiness checks.
+- `GET /api/v1/readiness` for PostgreSQL availability.
+- `compose.yml` with a local PostgreSQL service for M3 verification.
+- PostgreSQL settings, engine, session, and probe infrastructure in `apps/api`.
+- `IF-M3` traceability scaffolding, evidence, and closure records.
 - Day 1 closure document `docs/traceability/closures/IF-D1-day-1-closure.md`.
 - Day 1 closure evidence record `IF-P1-E003`.
 - Day 1 closure registry entry in `research/traceability/registry.json`.
@@ -18,10 +23,12 @@ All significant changes to IntentForge AI are documented in this file.
 - Confirmed the official Python 3.12.10 virtual environment.
 - Confirmed package import and application import.
 - Verified Ruff static analysis passes.
-- Verified the 16-test backend regression suite passes.
-- Verified the remote repository is synchronized with local `main`.
+- Verified the 25-test backend regression suite passes.
+- Verified Alembic connects to the live PostgreSQL boundary.
+- Verified the live API health and readiness endpoints against PostgreSQL.
+- Verified readiness returns `503` when PostgreSQL is unavailable.
 
-## [0.1.0] — 2026-07-07
+## [0.1.0] - 2026-07-07
 
 ### Added
 

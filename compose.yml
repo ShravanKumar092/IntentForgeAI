@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-intentforge_db}
+      POSTGRES_USER: ${POSTGRES_USER:-intentforge}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-intentforge} -d ${POSTGRES_DB:-intentforge_db}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - intentforge-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  intentforge-postgres-data:

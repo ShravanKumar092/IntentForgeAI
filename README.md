@@ -4,20 +4,22 @@
 
 IntentForge AI is an evidence-governed project intelligence and engineering platform.
 
-The repository currently contains a verified Day 1 backend foundation:
+The repository currently contains a verified Day 1 backend foundation and a verified PostgreSQL persistence foundation:
 
 - modular monorepo structure;
 - FastAPI API under `apps/api`;
 - typed runtime configuration;
 - runtime identity and correlation handling;
 - structured request logging;
-- health endpoint and regression tests.
+- health and readiness endpoints;
+- PostgreSQL persistence scaffolding and regression tests.
 
 ## Current State
 
 Phase 1 is active.
 
 Day 1 is complete for the verified backend foundation and runtime observability baseline.
+M3 is complete for the PostgreSQL persistence foundation.
 
 ## Runtime Contract
 
@@ -45,6 +47,7 @@ From `apps/api`:
 2. Install dependencies with `.\.venv\Scripts\python.exe -m pip install -e .[dev]`.
 3. Run linting with `.\.venv\Scripts\python.exe -m ruff check .`.
 4. Run tests with `.\.venv\Scripts\python.exe -m pytest tests -v`.
+5. Start PostgreSQL locally with `docker compose -f ..\..\compose.yml up -d postgres` when validating M3.
 
 ## Local Run
 
@@ -57,6 +60,7 @@ Start the API from `apps/api` with:
 ## Verification
 
 - Health endpoint: `GET /api/v1/health`
+- Readiness endpoint: `GET /api/v1/readiness`
 - OpenAPI docs: `http://127.0.0.1:8010/docs`
 - ReDoc: `http://127.0.0.1:8010/redoc`
 

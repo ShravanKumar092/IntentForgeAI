@@ -54,6 +54,49 @@
         "IF-P1-E002"
       ],
       "commit": "99be223"
+    },
+    {
+      "id": "IF-M3",
+      "title": "PostgreSQL Persistence Foundation",
+      "status": "VERIFIED",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004"
+      ],
+      "implementation": [
+        ".env.example",
+        "apps/api/alembic.ini",
+        "apps/api/alembic/env.py",
+        "apps/api/alembic/script.py.mako",
+        "apps/api/alembic/versions/0001_postgresql_persistence_foundation.py",
+        "apps/api/src/intentforge_api/api/routes/readiness.py",
+        "apps/api/src/intentforge_api/core/config.py",
+        "apps/api/src/intentforge_api/db/base.py",
+        "apps/api/src/intentforge_api/db/connection.py",
+        "apps/api/src/intentforge_api/db/engine.py",
+        "apps/api/src/intentforge_api/db/session.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/pyproject.toml",
+        "apps/api/requirements.lock",
+        "compose.yml",
+        "docs/adr/ADR-004-postgresql-persistence-and-migration-foundation.md"
+      ],
+      "tests": [
+        "apps/api/tests/test_database.py",
+        "apps/api/tests/test_readiness.py",
+        "apps/api/tests/test_config.py",
+        "apps/api/tests/test_health.py",
+        "apps/api/tests/test_logging.py",
+        "apps/api/tests/test_runtime.py",
+        "apps/api/tests/test_correlation.py"
+      ],
+      "evidence": [
+        "IF-P1-E003"
+      ],
+      "commit": "PENDING"
     }
   ],
   "closures": [
