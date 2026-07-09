@@ -202,6 +202,86 @@
         "IF-P1-E005"
       ],
       "commit": "33fe29e"
+    },
+    {
+      "id": "IF-M6",
+      "title": "Core Project Domain and Ownership Foundation",
+      "status": "VERIFIED",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004",
+        "ADR-005",
+        "ADR-006",
+        "ADR-007"
+      ],
+      "implementation": [
+        "apps/api/alembic/env.py",
+        "apps/api/alembic/versions/0003_project_domain_and_ownership_foundation.py",
+        "apps/api/src/intentforge_api/api/routes/projects.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/src/intentforge_api/projects/__init__.py",
+        "apps/api/src/intentforge_api/projects/dependencies.py",
+        "apps/api/src/intentforge_api/projects/errors.py",
+        "apps/api/src/intentforge_api/projects/models.py",
+        "apps/api/src/intentforge_api/projects/repository.py",
+        "apps/api/src/intentforge_api/projects/schemas.py",
+        "apps/api/src/intentforge_api/projects/service.py",
+        "docs/adr/ADR-007-core-project-domain-and-ownership-foundation.md",
+        "docs/traceability/milestones/IF-M6-core-project-domain-and-ownership-foundation.md"
+      ],
+      "tests": [
+        "apps/api/tests/test_project_model.py",
+        "apps/api/tests/test_project_repository.py",
+        "apps/api/tests/test_project_service.py",
+        "apps/api/tests/test_projects.py"
+      ],
+      "evidence": [
+        "IF-P1-E006"
+      ],
+      "commit": "PENDING"
+    },
+    {
+      "id": "IF-M7",
+      "title": "Project Intent and Requirement Foundation",
+      "status": "VERIFIED",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004",
+        "ADR-005",
+        "ADR-006",
+        "ADR-007"
+      ],
+      "implementation": [
+        "apps/api/alembic/env.py",
+        "apps/api/alembic/versions/0004_project_intents_and_requirements_foundation.py",
+        "apps/api/src/intentforge_api/api/routes/projects.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/src/intentforge_api/projects/__init__.py",
+        "apps/api/src/intentforge_api/projects/dependencies.py",
+        "apps/api/src/intentforge_api/projects/errors.py",
+        "apps/api/src/intentforge_api/projects/models.py",
+        "apps/api/src/intentforge_api/projects/repository.py",
+        "apps/api/src/intentforge_api/projects/schemas.py",
+        "apps/api/src/intentforge_api/projects/service.py",
+        "docs/adr/ADR-007-core-project-domain-and-ownership-foundation.md",
+        "docs/traceability/milestones/IF-M7-project-intent-and-requirement-foundation.md"
+      ],
+      "tests": [
+        "apps/api/tests/test_project_model.py",
+        "apps/api/tests/test_project_repository.py",
+        "apps/api/tests/test_project_service.py",
+        "apps/api/tests/test_projects.py"
+      ],
+      "evidence": [
+        "IF-P1-E007"
+      ],
+      "commit": "PENDING"
     }
   ],
   "closures": [

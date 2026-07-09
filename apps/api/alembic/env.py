@@ -7,8 +7,9 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from intentforge_api.core.config import get_settings
 import intentforge_api.auth.models  # noqa: F401
+import intentforge_api.projects.models  # noqa: F401
+from intentforge_api.core.config import get_settings
 from intentforge_api.db.base import Base
 
 config = context.config
