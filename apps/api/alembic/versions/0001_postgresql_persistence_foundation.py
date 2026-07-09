@@ -1,6 +1,6 @@
 """PostgreSQL persistence foundation baseline.
 
-Revision ID: 0001_postgresql_persistence_foundation
+Revision ID: m3_postgres_001
 Revises:
 Create Date: 2026-07-08
 
@@ -12,7 +12,7 @@ without inventing domain schema before a domain requirement exists.
 from typing import Sequence, Union
 
 
-revision: str = "0001_postgresql_persistence_foundation"
+revision: str = "m3_postgres_001"
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

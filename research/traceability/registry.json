@@ -141,6 +141,67 @@
         "IF-P1-E004"
       ],
       "commit": "297585b"
+    },
+    {
+      "id": "IF-M5",
+      "title": "Security, Identity, and Authentication Foundation",
+      "status": "PENDING",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004",
+        "ADR-005",
+        "ADR-006"
+      ],
+      "implementation": [
+        ".env.example",
+        "CHANGELOG.md",
+        "apps/api/alembic/env.py",
+        "apps/api/alembic/versions/0001_postgresql_persistence_foundation.py",
+        "apps/api/alembic/versions/0002_user_identity_and_authentication_foundation.py",
+        "apps/api/pyproject.toml",
+        "apps/api/src/intentforge_api/api/routes/auth.py",
+        "apps/api/src/intentforge_api/auth/__init__.py",
+        "apps/api/src/intentforge_api/auth/dependencies.py",
+        "apps/api/src/intentforge_api/auth/models.py",
+        "apps/api/src/intentforge_api/auth/normalization.py",
+        "apps/api/src/intentforge_api/auth/passwords.py",
+        "apps/api/src/intentforge_api/auth/repository.py",
+        "apps/api/src/intentforge_api/auth/schemas.py",
+        "apps/api/src/intentforge_api/auth/tokens.py",
+        "apps/api/src/intentforge_api/core/config.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/tests/test_auth.py",
+        "apps/api/tests/test_config.py",
+        "apps/api/tests/test_identity_model.py",
+        "apps/api/tests/test_passwords.py",
+        "apps/api/tests/test_repository.py",
+        "apps/api/tests/test_tokens.py",
+        "docs/adr/ADR-006-security-identity-and-authentication-foundation.md",
+        "docs/traceability/milestones/IF-M5-security-identity-and-authentication-foundation.md",
+        "research/experiments/evidence/phase-1/IF-P1-E005-security-identity-authentication-foundation.md"
+      ],
+      "tests": [
+        "apps/api/tests/test_auth.py",
+        "apps/api/tests/test_config.py",
+        "apps/api/tests/test_identity_model.py",
+        "apps/api/tests/test_passwords.py",
+        "apps/api/tests/test_repository.py",
+        "apps/api/tests/test_tokens.py",
+        "apps/api/tests/test_database.py",
+        "apps/api/tests/test_readiness.py",
+        "apps/api/tests/test_health.py",
+        "apps/api/tests/test_logging.py",
+        "apps/api/tests/test_runtime.py",
+        "apps/api/tests/test_correlation.py",
+        "apps/api/tests/test_redis.py"
+      ],
+      "evidence": [
+        "IF-P1-E005"
+      ],
+      "commit": "PENDING"
     }
   ],
   "closures": [

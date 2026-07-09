@@ -2,6 +2,7 @@ from enum import StrEnum
 from functools import lru_cache
 
 from pydantic import AliasChoices, Field, SecretStr
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.engine import URL
 
@@ -61,6 +62,29 @@ class Settings(BaseSettings):
         validation_alias=AliasChoices("REDIS_TIMEOUT_SECONDS", "redis_timeout_seconds"),
     )
 
+    token_signing_secret: SecretStr = Field(
+        default=SecretStr("change_me"),
+        repr=False,
+        validation_alias=AliasChoices("TOKEN_SIGNING_SECRET", "SECRET_KEY", "token_signing_secret"),
+    )
+    token_signing_algorithm: str = Field(
+        default="HS256",
+        validation_alias=AliasChoices("TOKEN_SIGNING_ALGORITHM", "token_signing_algorithm"),
+    )
+    access_token_expire_minutes: int = Field(
+        default=15,
+        gt=0,
+        validation_alias=AliasChoices("ACCESS_TOKEN_EXPIRE_MINUTES", "access_token_expire_minutes"),
+    )
+    token_issuer: str = Field(
+        default="intentforge-api",
+        validation_alias=AliasChoices("TOKEN_ISSUER", "token_issuer"),
+    )
+    token_audience: str = Field(
+        default="intentforge-api",
+        validation_alias=AliasChoices("TOKEN_AUDIENCE", "token_audience"),
+    )
+
     @property
     def database_url(self) -> URL:
         return URL.create(
@@ -84,6 +108,24 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.app_environment is Environment.PRODUCTION
+
+    @model_validator(mode="after")
+    def validate_security_settings(self) -> "Settings":
+        if self.app_environment is Environment.PRODUCTION:
+            secret_value = self.token_signing_secret.get_secret_value()
+            if secret_value in {"change_me", "development-secret"} or len(secret_value) < 32:
+                raise ValueError("production token signing secret must be configured securely")
+
+        if not self.token_signing_algorithm:
+            raise ValueError("token signing algorithm must not be empty")
+
+        if not self.token_issuer.strip():
+            raise ValueError("token issuer must not be empty")
+
+        if not self.token_audience.strip():
+            raise ValueError("token audience must not be empty")
+
+        return self
 
 
 @lru_cache

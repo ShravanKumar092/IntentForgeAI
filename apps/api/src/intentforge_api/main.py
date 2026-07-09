@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from intentforge_api.api.routes.health import router as health_router
+from intentforge_api.api.routes.auth import router as auth_router
 from intentforge_api.api.routes.readiness import router as readiness_router
 from intentforge_api.core.config import Settings, get_settings
 from intentforge_api.core.logging import configure_logging
@@ -47,6 +48,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.add_middleware(CorrelationIdMiddleware)
 
     app.include_router(health_router, prefix="/api/v1")
+    app.include_router(auth_router, prefix="/api/v1")
     app.include_router(readiness_router, prefix="/api/v1")
 
     return app

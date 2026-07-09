@@ -6,6 +6,10 @@ All significant changes to IntentForge AI are documented in this file.
 
 ### Added
 
+- M5 security, identity, and authentication foundation with PBKDF2 password hashing, signed bearer access tokens, `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, and `GET /api/v1/auth/me`.
+- PostgreSQL-backed durable `users` identity model and Alembic authentication migration.
+- Structured authentication event logging with correlation-aware security events.
+- `docs/adr/ADR-006-security-identity-and-authentication-foundation.md` and M5 traceability/evidence records.
 - M4 Redis ephemeral state and coordination foundation with async Redis, readiness aggregation, and key namespace governance.
 - `GET /api/v1/readiness` now reports PostgreSQL and Redis readiness together.
 - `compose.yml` now includes a Redis service for local M4 verification.
@@ -25,6 +29,13 @@ All significant changes to IntentForge AI are documented in this file.
 
 ### Verification
 
+- Confirmed the official Python 3.12.10 virtual environment.
+- Verified `python -m ruff check apps/api` passes.
+- Verified `python -m pytest apps/api/tests -v` passes with 58 tests.
+- Verified Alembic upgrades the live PostgreSQL schema to `m5_auth_001`.
+- Verified live registration, login, and `GET /api/v1/auth/me` against PostgreSQL.
+- Verified controlled authentication failures for missing credentials, malformed bearer tokens, and invalid credentials.
+- Verified live persistence of normalized email and password hash prefixes without exposing secrets.
 - Confirmed the official Python 3.12.10 virtual environment.
 - Confirmed package import and application import.
 - Verified Ruff static analysis passes.

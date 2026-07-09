@@ -18,6 +18,12 @@ def test_default_settings_have_expected_runtime_identity() -> None:
     assert settings.redis_port == 6379
     assert settings.redis_database == 0
     assert settings.redis_timeout_seconds == 5.0
+    assert settings.token_signing_secret.get_secret_value() == "change_me"
+    assert settings.token_signing_algorithm == "HS256"
+    assert settings.access_token_expire_minutes == 15
+    assert settings.token_issuer == "intentforge-api"
+    assert settings.token_audience == "intentforge-api"
+    assert "change_me" not in repr(settings)
 
 
 def test_environment_values_are_typed() -> None:
@@ -25,6 +31,7 @@ def test_environment_values_are_typed() -> None:
         _env_file=None,
         app_environment="production",
         app_debug=False,
+        token_signing_secret="super-secret-super-secret-super-secret",
     )
 
     assert settings.app_environment is Environment.PRODUCTION
@@ -71,6 +78,22 @@ def test_invalid_redis_timeout_is_rejected() -> None:
         Settings(
             _env_file=None,
             redis_timeout_seconds=0,
+        )
+
+
+def test_invalid_access_token_lifetime_is_rejected() -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            _env_file=None,
+            access_token_expire_minutes=0,
+        )
+
+
+def test_production_token_secret_is_required() -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            _env_file=None,
+            app_environment="production",
         )
 
 
