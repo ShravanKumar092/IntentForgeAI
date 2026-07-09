@@ -48,6 +48,19 @@ class Settings(BaseSettings):
         validation_alias=AliasChoices("POSTGRES_PASSWORD", "postgres_password"),
     )
 
+    redis_host: str = "127.0.0.1"
+    redis_port: int = Field(default=6379, ge=1, le=65535)
+    redis_database: int = Field(
+        default=0,
+        ge=0,
+        validation_alias=AliasChoices("REDIS_DB", "redis_database"),
+    )
+    redis_timeout_seconds: float = Field(
+        default=5.0,
+        gt=0,
+        validation_alias=AliasChoices("REDIS_TIMEOUT_SECONDS", "redis_timeout_seconds"),
+    )
+
     @property
     def database_url(self) -> URL:
         return URL.create(
@@ -57,6 +70,15 @@ class Settings(BaseSettings):
             host=self.postgres_host,
             port=self.postgres_port,
             database=self.postgres_database,
+        )
+
+    @property
+    def redis_url(self) -> URL:
+        return URL.create(
+            drivername="redis",
+            host=self.redis_host,
+            port=self.redis_port,
+            database=str(self.redis_database),
         )
 
     @property

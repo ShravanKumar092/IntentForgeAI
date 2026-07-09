@@ -14,6 +14,10 @@ def test_default_settings_have_expected_runtime_identity() -> None:
     assert settings.api_host == "127.0.0.1"
     assert settings.api_port == 8010
     assert settings.log_level == "INFO"
+    assert settings.redis_host == "127.0.0.1"
+    assert settings.redis_port == 6379
+    assert settings.redis_database == 0
+    assert settings.redis_timeout_seconds == 5.0
 
 
 def test_environment_values_are_typed() -> None:
@@ -42,6 +46,31 @@ def test_invalid_api_port_is_rejected(invalid_port: int) -> None:
         Settings(
             _env_file=None,
             api_port=invalid_port,
+        )
+
+
+@pytest.mark.parametrize("invalid_port", [0, 65536])
+def test_invalid_redis_port_is_rejected(invalid_port: int) -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            _env_file=None,
+            redis_port=invalid_port,
+        )
+
+
+def test_invalid_redis_database_is_rejected() -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            _env_file=None,
+            redis_database=-1,
+        )
+
+
+def test_invalid_redis_timeout_is_rejected() -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            _env_file=None,
+            redis_timeout_seconds=0,
         )
 
 

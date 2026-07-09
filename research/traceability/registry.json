@@ -97,6 +97,50 @@
         "IF-P1-E003"
       ],
       "commit": "ba689fe"
+    },
+    {
+      "id": "IF-M4",
+      "title": "Redis Ephemeral State and Coordination Foundation",
+      "status": "PENDING",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004",
+        "ADR-005"
+      ],
+      "implementation": [
+        ".env.example",
+        "apps/api/pyproject.toml",
+        "apps/api/requirements.lock",
+        "apps/api/src/intentforge_api/api/routes/readiness.py",
+        "apps/api/src/intentforge_api/cache/__init__.py",
+        "apps/api/src/intentforge_api/cache/client.py",
+        "apps/api/src/intentforge_api/cache/connection.py",
+        "apps/api/src/intentforge_api/cache/namespace.py",
+        "apps/api/src/intentforge_api/core/config.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/tests/test_config.py",
+        "apps/api/tests/test_readiness.py",
+        "apps/api/tests/test_redis.py",
+        "compose.yml",
+        "docs/adr/ADR-005-redis-ephemeral-state-and-coordination-foundation.md"
+      ],
+      "tests": [
+        "apps/api/tests/test_config.py",
+        "apps/api/tests/test_database.py",
+        "apps/api/tests/test_readiness.py",
+        "apps/api/tests/test_redis.py",
+        "apps/api/tests/test_health.py",
+        "apps/api/tests/test_logging.py",
+        "apps/api/tests/test_runtime.py",
+        "apps/api/tests/test_correlation.py"
+      ],
+      "evidence": [
+        "IF-P1-E004"
+      ],
+      "commit": "PENDING"
     }
   ],
   "closures": [

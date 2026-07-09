@@ -6,6 +6,11 @@ All significant changes to IntentForge AI are documented in this file.
 
 ### Added
 
+- M4 Redis ephemeral state and coordination foundation with async Redis, readiness aggregation, and key namespace governance.
+- `GET /api/v1/readiness` now reports PostgreSQL and Redis readiness together.
+- `compose.yml` now includes a Redis service for local M4 verification.
+- Redis settings, client, probe, and namespace infrastructure in `apps/api`.
+- `IF-M4` traceability scaffolding, evidence, and closure records.
 - M3 PostgreSQL persistence foundation with async SQLAlchemy, Alembic, and readiness checks.
 - `GET /api/v1/readiness` for PostgreSQL availability.
 - `compose.yml` with a local PostgreSQL service for M3 verification.
@@ -23,10 +28,10 @@ All significant changes to IntentForge AI are documented in this file.
 - Confirmed the official Python 3.12.10 virtual environment.
 - Confirmed package import and application import.
 - Verified Ruff static analysis passes.
-- Verified the 25-test backend regression suite passes.
+- Verified the 37-test backend regression suite passes.
 - Verified Alembic connects to the live PostgreSQL boundary.
-- Verified the live API health and readiness endpoints against PostgreSQL.
-- Verified readiness returns `503` when PostgreSQL is unavailable.
+- Verified the live API health and readiness endpoints against PostgreSQL and Redis.
+- Verified readiness returns `503` when Redis is unavailable.
 
 ## [0.1.0] - 2026-07-07
 
