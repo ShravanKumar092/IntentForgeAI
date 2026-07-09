@@ -8,3 +8,19 @@ class ProjectIntentNotFoundError(RuntimeError):
 
 class RequirementNotFoundError(RuntimeError):
     pass
+
+
+class SourceNotFoundError(RuntimeError):
+    pass
+
+
+class DuplicateSourceError(RuntimeError):
+    pass
+
+
+class EvidenceNotFoundError(RuntimeError):
+    pass
+
+
+class DuplicateEvidenceRelationshipError(RuntimeError):
+    pass

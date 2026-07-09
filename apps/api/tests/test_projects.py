@@ -9,7 +9,12 @@ from intentforge_api.auth.dependencies import get_authenticated_principal
 from intentforge_api.auth.models import User
 from intentforge_api.auth.schemas import AuthenticationPrincipal
 from intentforge_api.main import create_app
-from intentforge_api.projects.dependencies import get_project_service
+from intentforge_api.projects.dependencies import (
+    get_evidence_requirement_service,
+    get_evidence_service,
+    get_project_service,
+    get_source_service,
+)
 from intentforge_api.projects.errors import ProjectNotFoundError
 from intentforge_api.projects.models import (
     Project,
@@ -472,5 +477,208 @@ def test_update_project_requirement_route_updates_requirement() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["title"] == "Updated title"
+
+    client.app.dependency_overrides.clear()
+
+
+class _FakeSourceService:
+    def __init__(self, source=None):
+        self.source = source
+        self.sources = [source] if source is not None else []
+        self.created_payload = None
+        self.updated_payload = None
+
+    async def create_source(self, principal, project_id, payload):
+        self.created_payload = payload
+        from intentforge_api.projects.models import Source
+
+        source = Source(
+            id=uuid4(),
+            project_id=project_id,
+            source_type=payload.source_type.value,
+            title=payload.title,
+            locator=payload.locator,
+            observed_at=payload.observed_at,
+            created_at=datetime.now(UTC),
+            updated_at=datetime.now(UTC),
+        )
+        self.sources.append(source)
+        return source
+
+    async def list_sources(self, principal, project_id):
+        return [source for source in self.sources if source.project_id == project_id]
+
+    async def get_source(self, principal, project_id, source_id):
+        for source in self.sources:
+            if source.project_id == project_id and source.id == source_id:
+                return source
+        from intentforge_api.projects.errors import SourceNotFoundError
+
+        raise SourceNotFoundError("source not found")
+
+    async def update_source(self, principal, project_id, source_id, payload):
+        for source in self.sources:
+            if source.project_id == project_id and source.id == source_id:
+                if payload.title is not None:
+                    source.title = payload.title
+                if payload.locator is not None:
+                    source.locator = payload.locator
+                if payload.observed_at is not None:
+                    source.observed_at = payload.observed_at
+                self.updated_payload = payload
+                return source
+        from intentforge_api.projects.errors import SourceNotFoundError
+
+        raise SourceNotFoundError("source not found")
+
+
+class _FakeEvidenceService:
+    def __init__(self, evidence=None):
+        self.evidence = evidence
+        self.evidence_items = [evidence] if evidence is not None else []
+        self.created_payload = None
+        self.updated_payload = None
+
+    async def create_evidence(self, principal, project_id, payload):
+        self.created_payload = payload
+        from intentforge_api.projects.models import Evidence
+
+        evidence = Evidence(
+            id=uuid4(),
+            project_id=project_id,
+            source_id=payload.source_id,
+            claim=payload.claim,
+            excerpt=payload.excerpt,
+            source_location=payload.source_location,
+            observed_at=payload.observed_at,
+            created_at=datetime.now(UTC),
+            updated_at=datetime.now(UTC),
+        )
+        self.evidence_items.append(evidence)
+        return evidence
+
+    async def list_evidence(self, principal, project_id):
+        return [item for item in self.evidence_items if item.project_id == project_id]
+
+    async def get_evidence(self, principal, project_id, evidence_id):
+        for evidence in self.evidence_items:
+            if evidence.project_id == project_id and evidence.id == evidence_id:
+                return evidence
+        from intentforge_api.projects.errors import EvidenceNotFoundError
+
+        raise EvidenceNotFoundError("evidence not found")
+
+    async def update_evidence(self, principal, project_id, evidence_id, payload):
+        for evidence in self.evidence_items:
+            if evidence.project_id == project_id and evidence.id == evidence_id:
+                if payload.claim is not None:
+                    evidence.claim = payload.claim
+                if payload.excerpt is not None:
+                    evidence.excerpt = payload.excerpt
+                if payload.source_location is not None:
+                    evidence.source_location = payload.source_location
+                if payload.observed_at is not None:
+                    evidence.observed_at = payload.observed_at
+                self.updated_payload = payload
+                return evidence
+        from intentforge_api.projects.errors import EvidenceNotFoundError
+
+        raise EvidenceNotFoundError("evidence not found")
+
+
+class _FakeEvidenceRequirementService:
+    def __init__(self, links=None):
+        self.links = links or []
+        self.created_payload = None
+
+    async def link_evidence_to_requirement(self, principal, project_id, evidence_id, payload):
+        from intentforge_api.projects.models import EvidenceRequirementLink
+
+        link = EvidenceRequirementLink(
+            id=uuid4(),
+            project_id=project_id,
+            evidence_id=evidence_id,
+            requirement_id=payload.requirement_id,
+            relationship_type=payload.relationship_type.value,
+            created_at=datetime.now(UTC),
+        )
+        self.links.append(link)
+        self.created_payload = payload
+        return link
+
+    async def list_requirements_for_evidence(self, principal, project_id, evidence_id):
+        return [link for link in self.links if link.project_id == project_id and link.evidence_id == evidence_id]
+
+    async def list_evidence_for_requirement(self, principal, project_id, requirement_id):
+        return [link for link in self.links if link.project_id == project_id and link.requirement_id == requirement_id]
+
+
+def test_create_project_source_route_returns_created_source() -> None:
+    client = build_client()
+    service = _FakeSourceService()
+    principal = build_principal()
+    client.app.dependency_overrides[get_authenticated_principal] = lambda: principal
+    client.app.dependency_overrides[get_source_service] = lambda: service
+
+    response = client.post(
+        "/api/v1/projects/{}/sources".format(uuid4()),
+        json={
+            "source_type": "document",
+            "title": "Project source",
+            "locator": "https://example.com/spec",
+        },
+    )
+
+    assert response.status_code == 201
+    payload = response.json()
+    assert payload["source_type"] == "document"
+    assert payload["locator"] == "https://example.com/spec"
+
+    client.app.dependency_overrides.clear()
+
+
+def test_create_project_evidence_route_returns_created_evidence() -> None:
+    client = build_client()
+    service = _FakeEvidenceService()
+    principal = build_principal()
+    client.app.dependency_overrides[get_authenticated_principal] = lambda: principal
+    client.app.dependency_overrides[get_evidence_service] = lambda: service
+
+    response = client.post(
+        "/api/v1/projects/{}/evidence".format(uuid4()),
+        json={
+            "source_id": str(uuid4()),
+            "claim": "A clear claim",
+        },
+    )
+
+    assert response.status_code == 201
+    payload = response.json()
+    assert payload["claim"] == "A clear claim"
+
+    client.app.dependency_overrides.clear()
+
+
+def test_link_project_evidence_requirement_route_returns_link() -> None:
+    project_id = uuid4()
+    evidence_id = uuid4()
+    client = build_client()
+    service = _FakeEvidenceRequirementService()
+    principal = build_principal()
+    client.app.dependency_overrides[get_authenticated_principal] = lambda: principal
+    client.app.dependency_overrides[get_evidence_requirement_service] = lambda: service
+
+    response = client.post(
+        f"/api/v1/projects/{project_id}/evidence/{evidence_id}/requirements",
+        json={
+            "requirement_id": str(uuid4()),
+            "relationship_type": "supports",
+        },
+    )
+
+    assert response.status_code == 201
+    payload = response.json()
+    assert payload["evidence_id"] == str(evidence_id)
+    assert payload["relationship_type"] == "supports"
 
     client.app.dependency_overrides.clear()

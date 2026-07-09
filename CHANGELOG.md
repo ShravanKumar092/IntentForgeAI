@@ -24,6 +24,7 @@ All significant changes to IntentForge AI are documented in this file.
 - Day 1 closure evidence record `IF-P1-E003`.
 - Day 1 closure registry entry in `research/traceability/registry.json`.
 - Repository documentation aligned with the verified backend state.
+- Durable project source and evidence provenance support with source, evidence, and evidence-requirement link entities.
 - Explicit line-ending policy through `.gitattributes`.
 - Apache 2.0 licensing for the repository.
 

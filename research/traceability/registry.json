@@ -282,6 +282,44 @@
         "IF-P1-E007"
       ],
       "commit": "PENDING"
+    },
+    {
+      "id": "IF-M8",
+      "title": "Source and Evidence Provenance Foundation",
+      "status": "PENDING",
+      "phase": "Phase 1",
+      "architecture_decisions": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004",
+        "ADR-005",
+        "ADR-006",
+        "ADR-007",
+        "ADR-008"
+      ],
+      "implementation": [
+        "apps/api/alembic/versions/0005_evidence_and_source_provenance_foundation.py",
+        "apps/api/src/intentforge_api/api/routes/projects.py",
+        "apps/api/src/intentforge_api/main.py",
+        "apps/api/src/intentforge_api/projects/dependencies.py",
+        "apps/api/src/intentforge_api/projects/errors.py",
+        "apps/api/src/intentforge_api/projects/models.py",
+        "apps/api/src/intentforge_api/projects/repository.py",
+        "apps/api/src/intentforge_api/projects/schemas.py",
+        "apps/api/src/intentforge_api/projects/service.py",
+        "docs/adr/ADR-008-source-and-evidence-provenance-foundation.md",
+        "docs/traceability/milestones/IF-M8-source-and-evidence-provenance-foundation.md"
+      ],
+      "tests": [
+        "apps/api/tests/test_project_repository.py",
+        "apps/api/tests/test_project_service.py",
+        "apps/api/tests/test_projects.py"
+      ],
+      "evidence": [
+        "IF-P1-E008"
+      ],
+      "commit": "PENDING"
     }
   ],
   "closures": [

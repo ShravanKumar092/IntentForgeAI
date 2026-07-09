@@ -12,7 +12,12 @@ from intentforge_api.projects.models import (
     Requirement,
     RequirementLifecycleStatus,
 )
-from intentforge_api.projects.repository import SqlAlchemyProjectRepository
+from intentforge_api.projects.repository import (
+    SqlAlchemyEvidenceRepository,
+    SqlAlchemyEvidenceRequirementRepository,
+    SqlAlchemyProjectRepository,
+    SqlAlchemySourceRepository,
+)
 
 
 class _Result:
@@ -210,3 +215,166 @@ async def test_repository_get_requirement_by_id_returns_requirement_or_none() ->
     )
 
     assert found is requirement
+
+
+@pytest.mark.asyncio
+async def test_repository_create_source_adds_and_refreshes_source() -> None:
+    from intentforge_api.projects.models import Source, SourceType
+
+    session = _Session()
+    repository = SqlAlchemySourceRepository(session)
+
+    source = await repository.create_source(
+        project_id=uuid4(),
+        source_type=SourceType.DOCUMENT.value,
+        title="Source title",
+        locator="https://example.com/spec",
+    )
+
+    assert isinstance(source, Source)
+    assert source.title == "Source title"
+    assert session.added[0] is source
+    assert session.flushed is True
+    assert session.refreshed[0] is source
+
+
+@pytest.mark.asyncio
+async def test_repository_list_sources_returns_ordered_sources() -> None:
+    from intentforge_api.projects.models import Source, SourceType
+
+    source = Source(
+        id=uuid4(),
+        project_id=uuid4(),
+        source_type=SourceType.WEBSITE.value,
+        title="Website source",
+        locator="https://example.com",
+        created_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+        updated_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+    )
+    session = _Session(result=source)
+    repository = SqlAlchemySourceRepository(session)
+
+    sources = await repository.list_sources(project_id=source.project_id)
+
+    assert sources == [source]
+
+
+@pytest.mark.asyncio
+async def test_repository_create_evidence_adds_and_refreshes_evidence() -> None:
+    from intentforge_api.projects.models import Evidence
+
+    session = _Session()
+    repository = SqlAlchemyEvidenceRepository(session)
+
+    evidence = await repository.create_evidence(
+        project_id=uuid4(),
+        source_id=uuid4(),
+        claim="Evidence claim",
+    )
+
+    assert isinstance(evidence, Evidence)
+    assert evidence.claim == "Evidence claim"
+    assert session.added[0] is evidence
+    assert session.flushed is True
+    assert session.refreshed[0] is evidence
+
+
+@pytest.mark.asyncio
+async def test_repository_list_evidence_returns_ordered_evidence() -> None:
+    from intentforge_api.projects.models import Evidence
+
+    evidence = Evidence(
+        id=uuid4(),
+        project_id=uuid4(),
+        source_id=uuid4(),
+        claim="Evidence claim",
+        created_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+        updated_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+    )
+    session = _Session(result=evidence)
+    repository = SqlAlchemyEvidenceRepository(session)
+
+    evidence_items = await repository.list_evidence(project_id=evidence.project_id)
+
+    assert evidence_items == [evidence]
+
+
+@pytest.mark.asyncio
+async def test_repository_create_evidence_requirement_link_adds_and_refreshes_link() -> None:
+    from intentforge_api.projects.models import EvidenceRequirementLink
+
+    session = _Session()
+    repository = SqlAlchemyEvidenceRequirementRepository(session)
+
+    link = await repository.create_evidence_requirement_link(
+        project_id=uuid4(),
+        evidence_id=uuid4(),
+        requirement_id=uuid4(),
+        relationship_type="supports",
+    )
+
+    assert isinstance(link, EvidenceRequirementLink)
+    assert session.added[0] is link
+    assert session.flushed is True
+    assert session.refreshed[0] is link
+
+
+@pytest.mark.asyncio
+async def test_repository_find_link_returns_none_when_missing() -> None:
+    session = _Session()
+    repository = SqlAlchemyEvidenceRequirementRepository(session)
+
+    link = await repository.find_link(
+        project_id=uuid4(),
+        evidence_id=uuid4(),
+        requirement_id=uuid4(),
+        relationship_type="supports",
+    )
+
+    assert link is None
+
+
+@pytest.mark.asyncio
+async def test_repository_list_requirements_for_evidence_returns_links() -> None:
+    from intentforge_api.projects.models import EvidenceRequirementLink
+
+    link = EvidenceRequirementLink(
+        id=uuid4(),
+        project_id=uuid4(),
+        evidence_id=uuid4(),
+        requirement_id=uuid4(),
+        relationship_type="supports",
+        created_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+    )
+    session = _Session(result=link)
+    repository = SqlAlchemyEvidenceRequirementRepository(session)
+
+    links = await repository.list_requirements_for_evidence(
+        project_id=link.project_id,
+        evidence_id=link.evidence_id,
+    )
+
+    assert links == [link]
+
+
+@pytest.mark.asyncio
+async def test_repository_list_evidence_for_requirement_returns_links() -> None:
+    from intentforge_api.projects.models import EvidenceRequirementLink
+
+    link = EvidenceRequirementLink(
+        id=uuid4(),
+        project_id=uuid4(),
+        evidence_id=uuid4(),
+        requirement_id=uuid4(),
+        relationship_type="supports",
+        created_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+    )
+    session = _Session(result=link)
+    repository = SqlAlchemyEvidenceRequirementRepository(session)
+
+    links = await repository.list_evidence_for_requirement(
+        project_id=link.project_id,
+        requirement_id=link.requirement_id,
+    )
+
+    assert links == [link]
